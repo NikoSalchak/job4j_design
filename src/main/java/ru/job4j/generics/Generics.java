@@ -40,11 +40,12 @@ public class Generics {
         generics.printObject(second);
         generics.printObject(third);
 
+/*        generics.printBoundedWildCard(first);*/
         generics.printBoundedWildCard(second);
         generics.printBoundedWildCard(third);
 
         generics.printLowerBoundedWildCard(first);
         generics.printLowerBoundedWildCard(second);
-
+/*        generics.printLowerBoundedWildCard(third);*/
     }
 }
