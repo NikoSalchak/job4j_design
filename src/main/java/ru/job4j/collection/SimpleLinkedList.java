@@ -9,17 +9,18 @@ public class SimpleLinkedList<E> implements SimpleLinked<E> {
     private int size = 0;
     private int modCount;
     private Node<E> head;
-    private Node<E> tail;
 
     @Override
     public void add(E value) {
-        final Node<E> l = tail;
-        final Node<E> newNode = new Node<>(l, value, null);
-        tail = newNode;
-        if (l == null) {
+        final Node<E> newNode = new Node<>(value, null);
+        Node<E> current = head;
+        if (current == null) {
             head = newNode;
-        } else  {
-            l.next = newNode;
+        } else {
+            while (current.next != null) {
+                current = current.next;
+            }
+            current.next = newNode;
         }
         size++;
         modCount++;
@@ -28,21 +29,11 @@ public class SimpleLinkedList<E> implements SimpleLinked<E> {
     @Override
     public E get(int index) {
         Objects.checkIndex(index, size);
-        Node<E> x;
-        if (index < size / 2) {
-            x = head;
-            for (int i = 0; i < index; i++) {
-                x = x.next;
-                break;
-            }
-        } else {
-            x = tail;
-            for (int i = size - 1; i > index; i--) {
-                x = x.prev;
-                break;
-            }
+        Node<E> current = head;
+        for (int i = 0; i < index; i++) {
+            current = current.next;
         }
-        return x.item;
+        return current.item;
     }
 
     @Override
@@ -53,25 +44,20 @@ public class SimpleLinkedList<E> implements SimpleLinked<E> {
 
             @Override
             public boolean hasNext() {
-                checkForComodification();
+                if (modCount != expectedModCount) {
+                    throw new ConcurrentModificationException();
+                }
                 return current != null;
             }
 
             @Override
             public E next() {
-                checkForComodification();
                 if (!hasNext()) {
                     throw new NoSuchElementException();
                 }
                 E item = current.item;
                 current = current.next;
                 return item;
-            }
-
-            private void checkForComodification() {
-                if (modCount != expectedModCount) {
-                    throw new ConcurrentModificationException();
-                }
             }
         };
     }
@@ -80,10 +66,7 @@ public class SimpleLinkedList<E> implements SimpleLinked<E> {
         private E item;
         private Node<E> next;
 
-        private Node<E> prev;
-
-        Node(Node<E> prev, E element, Node<E> next) {
-            this.prev = prev;
+        Node(E element, Node<E> next) {
             this.item = element;
             this.next = next;
         }
