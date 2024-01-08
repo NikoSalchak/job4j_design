@@ -142,4 +142,20 @@ class ForwardLinkedTest {
         assertThat(second.next()).isEqualTo(2);
         assertThat(second.hasNext()).isFalse();
     }
+
+    @Test
+    void whenAddAfterGetIteratorThenMustBeException() {
+        Iterator<Integer> iterator = list.iterator();
+        list.add(3);
+        assertThatThrownBy(iterator::next)
+                .isInstanceOf(ConcurrentModificationException.class);
+    }
+
+    @Test
+    void whenRemoveAfterGetIteratorThenMustBeException() {
+        Iterator<Integer> iterator = list.iterator();
+        list.deleteFirst();
+        assertThatThrownBy(iterator::next)
+                .isInstanceOf(ConcurrentModificationException.class);
+    }
 }
