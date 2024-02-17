@@ -23,7 +23,7 @@ class ConfigTest {
     }
 
     @Test
-    void whenStringWithoutKeyThenException() {
+    void whenStringWithoutValueThenException() {
         String path = "./data/exceptionApp.properties";
         Config config = new Config(path);
         assertThatThrownBy(config::load)
@@ -37,5 +37,23 @@ class ConfigTest {
         Config config = new Config(path);
         config.load();
         assertThat(config.value("name")).isEqualTo("Niko Salchak=");
+    }
+
+    @Test
+    void whenStringWithoutKeyThenException() {
+        String path = "./data/exceptionValue.properties";
+        Config config = new Config(path);
+        assertThatThrownBy(config::load)
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("String must contain the following elements : \"key=value\"");
+    }
+
+    @Test
+    void whenStringWithoutEqualSignThenException() {
+        String path = "./data/exceptionPairWithoutEqualSign.properties";
+        Config config = new Config(path);
+        assertThatThrownBy(config::load)
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("String must contain the following elements : \"key=value\"");
     }
 }
