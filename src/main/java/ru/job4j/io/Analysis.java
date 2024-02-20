@@ -22,7 +22,6 @@ public class Analysis {
                     sb.append("\n");
                 }
             }
-            System.out.println(sb);
             printWriter.print(sb);
         } catch (IOException e) {
             e.printStackTrace();
