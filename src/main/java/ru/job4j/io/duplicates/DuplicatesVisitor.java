@@ -12,12 +12,7 @@ public class DuplicatesVisitor extends SimpleFileVisitor<Path> {
     @Override
     public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
         FileProperty fileProperty = new FileProperty(Files.size(file), file.getFileName().toString());
-        if (map.containsKey(fileProperty)) {
-            map.get(fileProperty).add(file.toAbsolutePath());
-        } else {
-            map.put(fileProperty, new ArrayList<>());
-            map.get(fileProperty).add(file.toAbsolutePath());
-        }
+        map.computeIfAbsent(fileProperty, k -> new ArrayList<>()).add(file.toAbsolutePath());
         return super.visitFile(file, attrs);
     }
 
