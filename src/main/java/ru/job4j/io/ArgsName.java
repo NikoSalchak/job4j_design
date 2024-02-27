@@ -33,12 +33,12 @@ public class ArgsName {
                     String.format("Error: This argument '%s' does not contain an equal sign", s)
             );
         }
-        if ("".equals(substrings[0].substring(1))) {
+        if (substrings[0].substring(1).isBlank()) {
             throw new IllegalArgumentException(
                     String.format("Error: This argument '%s' does not contain a key", s)
             );
         }
-        if ("".equals(substrings[1])) {
+        if (substrings[1].isBlank()) {
             throw new IllegalArgumentException(
                     String.format("Error: This argument '%s' does not contain a value", s)
             );
