@@ -34,8 +34,7 @@ public class Zip {
         }
     }
 
-    private void validateArgs(String[] args) {
-        ArgsName argsName = ArgsName.of(args);
+    private void validateArgs(ArgsName argsName) {
         Path start = Path.of(argsName.get("d"));
         if (!Files.exists(start)) {
             throw new IllegalArgumentException(
@@ -62,7 +61,7 @@ public class Zip {
         );
         Zip testZip = new Zip();
         ArgsName argsName = ArgsName.of(args);
-        testZip.validateArgs(args);
+        testZip.validateArgs(argsName);
         List<Path> sources = Search.search(
                 Paths.get(argsName.get("d")), path -> !path.toFile().getName().endsWith(argsName.get("e"))
         );
