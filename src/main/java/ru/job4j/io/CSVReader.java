@@ -62,14 +62,13 @@ public class CSVReader {
                             + "\'%s\' extension or must be \'%s\'", ".csv", "stdout")
             );
         }
-        for (String substrings : "name,age,last_name,education".split(",")) {
-            if (!(args[3].split("=")[1].contains(substrings))) {
+            if (args[3].split("=")[1].equals("")) {
                 throw new IllegalArgumentException(
                         String.format("Error: The value of the filter key must contain the following headers: "
                                 + "\'%s\',%s\',%s\',%s\' without spacebar", "name", "age", "last_name", "education")
                 );
             }
-        }
+
         ArgsName argsName = ArgsName.of(args);
         handle(argsName);
     }
