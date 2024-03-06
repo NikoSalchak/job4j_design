@@ -65,4 +65,66 @@ class CSVReaderTest {
         CSVReader.handle(argsName);
         assertThat(Files.readString(target.toPath())).isEqualTo(expected);
     }
+
+    @Test
+    void whenPathValueIsWrong() {
+        ArgsName argsName = ArgsName.of(new String[]{
+                "-path=./data/CsvReader",
+                "-delimiter=;",
+                "-out=./data/CSVReaderOut.csv",
+                "-filter=education,age,last_name"
+        });
+        assertThatThrownBy(() -> CSVReader.handle(argsName))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining(
+                        "Error: the value of the path key must have a \'%s\' extension", ".csv"
+                );
+    }
+
+    @Test
+    void whenDelimiterValueIsWrong() {
+        ArgsName argsName = ArgsName.of(new String[]{
+                "-path=./data/CsvReader.csv",
+                "-delimiter=.",
+                "-out=./data/CSVReaderOut.csv",
+                "-filter=education,age,last_name"
+        });
+        assertThatThrownBy(() -> CSVReader.handle(argsName))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining(
+                        "Error: the value of the delimiter key must be \'%s\' or \'%s\'", ";", ","
+                );
+    }
+
+    @Test
+    void whenOutValueIsWrong() {
+        ArgsName argsName = ArgsName.of(new String[]{
+                "-path=./data/CsvReader.csv",
+                "-delimiter=;",
+                "-out=./data/CSVReaderOut",
+                "-filter=education,age,last_name"
+        });
+        assertThatThrownBy(() -> CSVReader.handle(argsName))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining(
+                        "Error: the value of the out key must have a "
+                                + "\'%s\' extension or must be \'%s\'", ".csv", "stdout"
+                );
+    }
+
+    @Test
+    void whenFilterValuesAreWrong() {
+        ArgsName argsName = ArgsName.of(new String[]{
+                "-path=./data/CsvReader.csv",
+                "-delimiter=;",
+                "-out=./data/CSVReaderOut",
+                "-filter=headersAreWrong"
+        });
+        assertThatThrownBy(() -> CSVReader.handle(argsName))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining(
+                        "Error: the value of the out key must have a "
+                                + "\'%s\' extension or must be \'%s\'", ".csv", "stdout"
+                );
+    }
 }

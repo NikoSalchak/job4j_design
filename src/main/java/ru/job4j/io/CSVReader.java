@@ -6,6 +6,7 @@ import java.util.*;
 public class CSVReader {
 
     public static void handle(ArgsName argsName) {
+        validate(argsName);
         try (FileInputStream input = new FileInputStream(argsName.get("path"));
              PrintStream out = (argsName.get("out").equals("stdout")) ? System.out : new PrintStream(argsName.get("out"));
              PrintStream output = new PrintStream(out)) {
@@ -37,7 +38,7 @@ public class CSVReader {
         }
     }
 
-    public static String[] getColumn(List<List<String>> list, int index) {
+    private static String[] getColumn(List<List<String>> list, int index) {
         String[] column = new String[list.get(0).size()];
         for (int i = 0; i < list.size(); i++) {
             column[i] = list.get(i).get(index);
@@ -45,30 +46,38 @@ public class CSVReader {
         return column;
     }
 
-    public static void main(String[] args) {
-        if (!(args[0].split("=")[1].endsWith(".csv"))) {
+    private static void validate(ArgsName argsName) {
+        boolean filter = true;
+        if (!(argsName.get("path").endsWith(".csv"))) {
             throw new IllegalArgumentException(
                     String.format("Error: the value of the path key must have a \'%s\' extension", ".csv")
             );
         }
-        if (!(args[1].split("=")[1].equals(";") || args[1].split("=")[1].equals(","))) {
+        if (!(argsName.get("delimiter").equals(";") || argsName.get("delimiter").equals(","))) {
             throw new IllegalArgumentException(
                     String.format("Error: the value of the delimiter key must be \'%s\' or \'%s\'", ";", ",")
             );
         }
-        if (!(args[2].split("=")[1].endsWith(".csv") || args[2].split("=")[1].equals("stdout"))) {
+        if (!(argsName.get("out").endsWith(".csv") || argsName.get("out").equals("stdout"))) {
             throw new IllegalArgumentException(
                     String.format("Error: the value of the out key must have a "
                             + "\'%s\' extension or must be \'%s\'", ".csv", "stdout")
             );
         }
-            if (args[3].split("=")[1].equals("")) {
-                throw new IllegalArgumentException(
-                        String.format("Error: The value of the filter key must contain the following headers: "
-                                + "\'%s\',%s\',%s\',%s\' without spacebar", "name", "age", "last_name", "education")
-                );
+        for (String substring : "name,age,last_name,education".split(",")) {
+            if (argsName.get("filter").contains(substring)) {
+                filter = false;
             }
+        }
+        if (filter) {
+            throw new IllegalArgumentException(
+                    String.format("Error: The value of the filter key must contain the following headers: "
+                            + "\'%s\',%s\',%s\',%s\' without spacebar", "name", "age", "last_name", "education")
+            );
+        }
+    }
 
+    public static void main(String[] args) {
         ArgsName argsName = ArgsName.of(args);
         handle(argsName);
     }
