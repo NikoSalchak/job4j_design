@@ -16,8 +16,9 @@ public class UsageLog4j {
         short requiredTasks = 32767;
         long desiredSalary = 300000L;
         boolean achieved = false;
+        char avScore = 'c';
         LOG.debug("User info name : {}, age : {}, laptop size : {}", name, age, laptopSize);
         LOG.debug("monitor size : {}, completed tasks : {}, required tasks : {}", monitorSize, completeTasks, requiredTasks);
-        LOG.debug("desired salary : {}, Did you achieve your goal ? {} ", desiredSalary, achieved);
+        LOG.debug("desired salary : {}, Did you achieve your goal ? {}, average score : {}", desiredSalary, achieved, avScore);
     }
 }
