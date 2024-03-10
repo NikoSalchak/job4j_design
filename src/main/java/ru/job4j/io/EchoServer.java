@@ -34,7 +34,7 @@ public class EchoServer {
                 }
             }
         } catch (Exception e) {
-            LOG.error("Exception socket",e);
+            LOG.error("Exception socket", e);
         }
     }
 }

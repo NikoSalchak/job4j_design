@@ -10,7 +10,7 @@ public class UsageLog4j {
     public static void main(String[] args) {
         try {
             throw new Exception("Not supported code");
-        } catch ( Exception e) {
+        } catch (Exception e) {
             LOG.error("Exception in log example", e);
         }
     }
