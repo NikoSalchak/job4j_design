@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 
 public class EchoServer {
 
-    private static final Logger SERVER = LoggerFactory.getLogger(EchoServer.class.getName());
+    private static final Logger LOG = LoggerFactory.getLogger(EchoServer.class.getName());
 
     public static void main(String[] args)  {
         try (ServerSocket server = new ServerSocket(9000)) {
@@ -34,7 +34,7 @@ public class EchoServer {
                 }
             }
         } catch (Exception e) {
-            SERVER.error("Exception socket", e);
+            LOG.error("Exception socket", e);
         }
     }
 }
