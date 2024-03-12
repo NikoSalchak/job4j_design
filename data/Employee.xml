@@ -1,0 +1,8 @@
+<?xml version="1.1" encoding="UTF-8" ?>
+<employee name="Niko" age="28" knownEnglish="false">
+    <car brand="Nissan" year="2014"/>
+    <tasks>
+        <task>task1</task>
+        <task>task2</task>
+    </tasks>
+</employee>
