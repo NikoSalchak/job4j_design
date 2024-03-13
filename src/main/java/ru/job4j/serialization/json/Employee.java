@@ -1,6 +1,5 @@
 package ru.job4j.serialization.json;
 
-import java.io.Serializable;
 import java.util.Arrays;
 
 public class Employee {
@@ -16,6 +15,26 @@ public class Employee {
         this.knowsEnglish = knowsEnglish;
         this.car = car;
         this.tasks = tasks;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public boolean isKnowsEnglish() {
+        return knowsEnglish;
+    }
+
+    public Car getCar() {
+        return car;
+    }
+
+    public String[] getTasks() {
+        return tasks;
     }
 
     @Override
