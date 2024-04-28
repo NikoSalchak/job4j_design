@@ -14,6 +14,6 @@ insert into teens(name, gender) values('Karina', 'female');
 insert into teens(name, gender) values('Boris', 'male');
 
 SELECT a.name, b.name
-FROM (select name, gender from teens where gender = 'male') a
+FROM teens a
 CROSS JOIN teens b
-WHERE a.gender <> b.gender;
+WHERE a.gender > b.gender;
