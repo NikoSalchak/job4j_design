@@ -32,8 +32,7 @@ create or replace function tax_for_each_row()
 	returns trigger as
 	$$
 		BEGIN
-			update products
-			set price = price * 0.1 + price
+			price = price * 0.1 + price
 			where id = new.id;
 			return new;
 		END;
@@ -41,9 +40,11 @@ create or replace function tax_for_each_row()
 	LANGUAGE 'plpgsql';
 	
 create trigger tax_for_each_row_trigger
-	after insert on products
+	before insert on products
 	for each row
 	execute procedure tax_for_each_row();
+
+alter table products enable trigger tax_for_each_row_trigger;
 	
 insert into products (name, producer, count, price)
 	VALUES('product_3', 'producer_3', 8, 115);	
@@ -72,10 +73,9 @@ create trigger price_history
 	execute procedure price_history();
 
 insert into products (name, producer, count, price) VALUES('product_5', 'producer_5', 10, 200);
-	
-select * from history_of_price;
+insert into products (name, producer, count, price) VALUES('product_6', 'producer_5', 12, 200);
 
-			
+select * from products;			
 
 
 
