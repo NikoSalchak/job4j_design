@@ -30,10 +30,9 @@ alter table products disable trigger tax_trigger;
 
 create or replace function tax_for_each_row()
 	returns trigger as
-	$$
+	$$	
 		BEGIN
-			price = price * 0.1 + price
-			where id = new.id;
+			new.price = new.price * 0.1 + new.price;
 			return new;
 		END;
 	$$
@@ -73,9 +72,8 @@ create trigger price_history
 	execute procedure price_history();
 
 insert into products (name, producer, count, price) VALUES('product_5', 'producer_5', 10, 200);
-insert into products (name, producer, count, price) VALUES('product_6', 'producer_5', 12, 200);
 
-select * from products;			
+select * FROM products 
 
 
 
