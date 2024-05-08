@@ -63,3 +63,4 @@ fetch prior from cursor_products;
 move backward 1 from cursor_products;
 fetch next from cursor_products;
 close cursor_products;
+commit;
