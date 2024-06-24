@@ -100,7 +100,7 @@ $$;
 
 SELECT students.id, students.name, date_reg, solutions.id solution_id, date_create_solution
 FROM students
-	LEFT JOIN solutions ON students.id = solutions.student_id
+	JOIN solutions ON students.id = solutions.student_id
 WHERE DATE_PART('year', date_reg) = 2024
 ORDER BY students.id;
 
