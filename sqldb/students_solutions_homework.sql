@@ -104,24 +104,23 @@ FROM students
 WHERE DATE_PART('year', date_reg) = 2024
 ORDER BY students.id;
 
-SELECT students.name, solved_tasks
-FROM (SELECT students.id, COUNT(date_create_solution) solved_tasks
+SELECT t1.name, solved_tasks
+FROM (SELECT students.id, students.name, COUNT(solutions.id) solved_tasks
 		FROM students
 		 JOIN solutions ON students.id = solutions.student_id
 		WHERE DATE_PART('year', students.date_reg) = 2024
 		GROUP BY students.id
-		ORDER BY students.id) t1
-JOIN students ON t1.id = students.id;
+		ORDER BY students.id) t1;
 
-SELECT students.name, solved_tasks
-FROM (SELECT students.id, COUNT(date_create_solution) solved_tasks
+SELECT t1.name, solved_tasks
+FROM (SELECT students.id, students.name, COUNT(solutions.id) solved_tasks
 		FROM students
 			LEFT JOIN solutions ON students.id = solutions.student_id
 		WHERE DATE_PART('year', students.date_reg) = 2024
 		GROUP BY students.id
 		HAVING COUNT(date_create_solution) >= 100
-		ORDER BY students.id) t1
-JOIN students ON t1.id = students.id;
+		ORDER BY students.id) t1;
+
 	
 
 
