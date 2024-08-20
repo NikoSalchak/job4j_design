@@ -14,7 +14,8 @@ public class Truck extends Vehicle {
         return "Truck{"
                 + "name='" + name + '\''
                 + ", size=" + size
-                + ", carType='" + carType + '\''
+                + ", carType=" + carType
+                + ", parkingId=" + parkingId
                 + '}';
     }
 }

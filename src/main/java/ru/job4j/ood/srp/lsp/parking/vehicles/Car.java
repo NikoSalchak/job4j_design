@@ -14,7 +14,8 @@ public class Car extends Vehicle {
         return "Car{"
                 + "name='" + name + '\''
                 + ", size=" + size
-                + ", carType='" + carType + '\''
+                + ", carType=" + carType
+                + ", parkingId=" + parkingId
                 + '}';
     }
 }
