@@ -23,7 +23,7 @@ public class AbstractParking implements Parking {
         return vehicle;
     }
 
-    protected int indexOf(int parkingId) {
+    private int indexOf(int parkingId) {
         int rsl = -1;
         for (int i = 0; i < parkingSpots.size(); i++) {
             if (parkingSpots.get(i).getParkingId() == parkingId) {

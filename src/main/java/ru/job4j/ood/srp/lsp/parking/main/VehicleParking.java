@@ -4,7 +4,6 @@ import ru.job4j.ood.srp.lsp.parking.CarParking;
 import ru.job4j.ood.srp.lsp.parking.Parking;
 import ru.job4j.ood.srp.lsp.parking.TruckParking;
 import ru.job4j.ood.srp.lsp.parking.vehicles.Car;
-import ru.job4j.ood.srp.lsp.parking.vehicles.CarType;
 import ru.job4j.ood.srp.lsp.parking.vehicles.Truck;
 import ru.job4j.ood.srp.lsp.parking.vehicles.Vehicle;
 

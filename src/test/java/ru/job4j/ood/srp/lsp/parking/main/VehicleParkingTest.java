@@ -15,7 +15,6 @@ import static org.assertj.core.api.Assertions.*;
 import java.util.Arrays;
 import java.util.List;
 
-@Disabled("Тесты отключены.")
 class VehicleParkingTest {
 
     @Test
