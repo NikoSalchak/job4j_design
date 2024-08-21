@@ -1,6 +1,5 @@
 package ru.job4j.ood.srp.lsp.parking;
 
-import ru.job4j.ood.srp.lsp.parking.vehicles.CarType;
 import ru.job4j.ood.srp.lsp.parking.vehicles.Vehicle;
 
 import java.util.ArrayList;

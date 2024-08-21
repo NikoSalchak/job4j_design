@@ -12,8 +12,9 @@ public class TruckParking extends AbstractParking {
         super.spots = spots;
     }
 
-    public int getSize() {
-        return parkingSpots.size();
+    @Override
+    public CarType getCarType() {
+        return CarType.TRUCK;
     }
 
     @Override

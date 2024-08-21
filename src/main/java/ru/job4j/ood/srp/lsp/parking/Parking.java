@@ -7,6 +7,12 @@ import java.util.List;
 
 public interface Parking {
 
+    CarType getCarType();
+
+    int getSizeParking();
+
+    int getSpots();
+
     Vehicle add(Vehicle vehicle);
 
     boolean replace(int parkingId, Vehicle vehicle);

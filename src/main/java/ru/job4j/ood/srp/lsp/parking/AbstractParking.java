@@ -18,6 +18,21 @@ public class AbstractParking implements Parking {
     }
 
     @Override
+    public CarType getCarType() {
+        return CarType.CAR;
+    }
+
+    @Override
+    public int getSizeParking() {
+        return parkingSpots.size();
+    }
+
+    @Override
+    public int getSpots() {
+        return spots;
+    }
+
+    @Override
     public Vehicle add(Vehicle vehicle) {
         parkingSpots.add(vehicle);
         return vehicle;
