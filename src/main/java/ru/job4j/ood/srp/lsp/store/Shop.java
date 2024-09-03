@@ -11,7 +11,7 @@ public class Shop extends AbstractStore {
 
     @Override
     public Food add(Food food) {
-        food.setProductId(ids++);
+        setProductId(food);
         double percent = foodQuality(food);
         if (percent <= 75 && percent >= 25) {
             foods.add(food);

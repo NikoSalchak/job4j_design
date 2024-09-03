@@ -110,4 +110,44 @@ class ControlQualityTest {
         quality.sortProduct(milk);
         assertThat(stores.get(2).findAll()).contains(milk);
     }
+
+    @Test
+    void whenAddFoodThenResortThenWareHouse() {
+        List<Store> stores = Arrays.asList(
+                new WareHouse(),
+                new Shop(),
+                new Trash()
+        );
+        LocalDate now = LocalDate.now();
+        Food milk = new Milk(
+                "cow milk",
+                now.plusDays(11),
+                now.minusDays(2),
+                100);
+        ControlQuality quality = new ControlQuality(stores);
+        quality.sortProduct(milk);
+        quality.resort(stores);
+        assertThat(stores.get(0).findById(1)).isEqualTo(milk);
+    }
+
+    @Test
+    void whenAddFoodResultShopThenResortTrash() {
+        List<Store> stores = Arrays.asList(
+                new WareHouse(),
+                new Shop(),
+                new Trash()
+        );
+        LocalDate now = LocalDate.now();
+        Food bread = new Bread(
+                "white bread",
+                now.plusDays(10),
+                now.minusDays(4),
+                100);
+        ControlQuality quality = new ControlQuality(stores);
+        quality.sortProduct(bread);
+        assertThat(stores.get(1).findByName("white bread")).contains(bread);
+        bread.setExpiryDate(now.minusDays(1));
+        quality.resort(stores);
+        assertThat(stores.get(2).findById(1)).isEqualTo(bread);
+    }
 }

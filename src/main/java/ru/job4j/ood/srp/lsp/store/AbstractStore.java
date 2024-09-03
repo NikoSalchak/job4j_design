@@ -20,6 +20,12 @@ public abstract class AbstractStore implements Store {
         return remain / shelfLife * 100;
     }
 
+    protected void setProductId(Food food) {
+        if (food.getProductId() == 0) {
+            food.setProductId(ids++);
+        }
+    }
+
     private int indexOf(int productId) {
         int rsl = -1;
         for (int i = 0; i < foods.size(); i++) {

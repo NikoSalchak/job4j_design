@@ -14,7 +14,7 @@ public class WareHouse extends AbstractStore {
     public Food add(Food food) {
         double percent = foodQuality(food);
         if (percent > 75) {
-            food.setProductId(ids++);
+            setProductId(food);
             foods.add(food);
         }
         return food;

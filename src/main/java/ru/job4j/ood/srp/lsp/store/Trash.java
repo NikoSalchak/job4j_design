@@ -14,7 +14,7 @@ public class Trash extends AbstractStore {
     public Food add(Food food) {
         double percent = foodQuality(food);
         if (percent <= 0) {
-            food.setProductId(ids++);
+            setProductId(food);
             foods.add(food);
         }
         return food;
