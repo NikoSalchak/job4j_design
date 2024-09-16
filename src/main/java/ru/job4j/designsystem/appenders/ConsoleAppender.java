@@ -1,9 +1,11 @@
 package ru.job4j.designsystem.appenders;
 
-public class ConsoleAppender implements Appender {
+import ru.job4j.designsystem.LogLevel;
+
+public class ConsoleAppender extends AbstractAppender {
 
     @Override
-    public void append(String message) {
-        System.out.println(message);
+    public void append(String message, LogLevel logLevel) {
+        super.append(message, logLevel);
     }
 }

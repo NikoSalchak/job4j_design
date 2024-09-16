@@ -11,11 +11,12 @@ public class LoggerFactory {
 
     static class SimpleLogger implements Logger {
         private String name;
-        private PropertyReader properties;
+
+        private AppenderList appenderList;
 
         private SimpleLogger(String name) {
             this.name = name;
-            this.properties = new PropertyReader();
+            this.appenderList = new SimpleAppenderList();
         }
 
         @Override
@@ -23,34 +24,11 @@ public class LoggerFactory {
             return this.name;
         }
 
-        private int getPropertyAppenderLevel(String appenderLevel) {
-            int logLevelCounter = 0;
-            int rsl = 0;
-            for (LogLevel logLvl : LogLevel.values()) {
-                if (logLvl.name().equals(appenderLevel)) {
-                    rsl = logLevelCounter;
-                    break;
-                }
-                logLevelCounter++;
-            }
-            return rsl;
-        }
-
         private void log(String message, LogLevel logLevel) {
-            String[] rootLogger = properties.getRootConfigurations();
-            AppenderOperator operator;
-            LogInfo info = new SimpleLogInfo(LocalDateTime.now(), logLevel, this.name, message);
-            for (int i = 0; i < rootLogger.length; i++) {
-                if ("Console".equals(properties.getProperty("appender.".concat(rootLogger[i])))
-                        && getPropertyAppenderLevel(properties.getProperty("appender.".concat(rootLogger[i]).concat(".level"))) <= logLevel.ordinal()) {
-                    operator = new ConsoleAppenderOperator();
-                    operator.operate(info);
-                }
-                if ("File".equals(properties.getProperty("appender.".concat(rootLogger[i])))
-                        && getPropertyAppenderLevel(properties.getProperty("appender.".concat(rootLogger[i]).concat(".level"))) <= logLevel.ordinal()) {
-                    operator = new FileAppenderOperator(properties.getProperty("appender.".concat(rootLogger[i]).concat(".file")));
-                    operator.operate(info);
-                }
+            DateTimeParser dateTimeParser = new LoggerDateTimeParser();
+            String logMessage = String.format("%s %s %s - %s", dateTimeParser.parse(LocalDateTime.now()), logLevel.name(), this.name, message);
+            for (Appender appender : appenderList.getAppenderList()) {
+                appender.append(logMessage, logLevel);
             }
         }
 
