@@ -6,7 +6,6 @@ public class FileAppender implements Appender {
 
     private String filePath;
 
-
     public FileAppender(String filePath) {
         this.filePath = filePath;
     }

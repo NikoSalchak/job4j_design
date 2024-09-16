@@ -1,1 +1,2 @@
-2024-09-13 19:15:58 ERROR ru.job4j.designsystem.Main - ERROR message after refactoring
+2024-09-16 15:00:10 ERROR ru.job4j.designsystem.Main - ERROR message after refactoring
+2024-09-16 15:03:08 ERROR ru.job4j.designsystem.Main - ERROR message after refactoring

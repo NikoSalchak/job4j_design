@@ -9,24 +9,24 @@ import java.io.PrintStream;
 import static org.assertj.core.api.Assertions.*;
 
 class LoggerFactoryTest {
-    private static Logger logger;
+    private static Logger LOGGER;
     private ByteArrayOutputStream output = new ByteArrayOutputStream();
 
     @BeforeEach
     public void setUp() {
-        logger = LoggerFactory.getLogger("className");
+        LOGGER = LoggerFactory.getLogger("className");
         System.setOut(new PrintStream(output));
     }
 
     @Test
     void whenLoggerMessageInfoThenContain() {
-        logger.info("some message");
+        LOGGER.info("some message");
         assertThat(output.toString()).contains("some message");
     }
 
     @Test
     void whenLoggerMessageDebugThenIsAbsent() {
-        logger.debug("some message");
+        LOGGER.debug("some message");
         assertThat(output.toString()).isEmpty();
     }
 }
