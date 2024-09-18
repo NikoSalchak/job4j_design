@@ -2,13 +2,39 @@ package ru.job4j.designsystem;
 
 import ru.job4j.designsystem.appenders.*;
 import java.time.LocalDateTime;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 public class LoggerFactory {
 
     public static Logger getLogger(String name) {
-        return new SimpleLogger(name);
+        PropertyReader properties = new PropertyReader();
+        String[] rootLogger = properties.getRootConfigurations();
+        List<Appender> appenderList = new ArrayList<>();
+        for (int i = 0; i < rootLogger.length; i++) {
+            if ("Console".equals(properties.getProperty("appender.".concat(rootLogger[i])))) {
+                int level = getPropertyAppenderLevel(properties.getProperty("appender.".concat(rootLogger[i].concat(".level"))));
+                appenderList.add(new ConsoleAppender(level));
+            }
+            if ("File".equals(properties.getProperty("appender.".concat(rootLogger[i])))) {
+                int level = getPropertyAppenderLevel(properties.getProperty("appender.".concat(rootLogger[i].concat(".level"))));
+                appenderList.add(new FileAppender(level, properties.getProperty("appender.".concat(rootLogger[i].concat(".file")))));
+            }
+        }
+        return new SimpleLogger(name, appenderList);
+    }
+
+    private static int getPropertyAppenderLevel(String appenderLevel) {
+        int logLevelCounter = 0;
+        int rsl = 0;
+        for (LogLevel logLvl : LogLevel.values()) {
+            if (logLvl.name().equals(appenderLevel)) {
+                rsl = logLevelCounter;
+                break;
+            }
+            logLevelCounter++;
+        }
+        return rsl;
     }
 
     static class SimpleLogger implements Logger {
@@ -16,9 +42,9 @@ public class LoggerFactory {
 
         private List<Appender> appenderList;
 
-        private SimpleLogger(String name) {
+        private SimpleLogger(String name, List<Appender> appenderList) {
             this.name = name;
-            this.appenderList = Arrays.asList(new ConsoleAppender(), new FileAppender());
+            this.appenderList = appenderList;
         }
 
         @Override
