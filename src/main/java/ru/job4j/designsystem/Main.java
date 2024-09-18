@@ -18,6 +18,5 @@ public class Main {
         LOGGER.debug("DEBUG message");
         LOGGER.info("INFO message");
         LOGGER.error("ERROR simpleLog and secondFileLog");
-
     }
 }

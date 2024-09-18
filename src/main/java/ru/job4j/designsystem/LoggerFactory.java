@@ -2,6 +2,8 @@ package ru.job4j.designsystem;
 
 import ru.job4j.designsystem.appenders.*;
 import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.List;
 
 public class LoggerFactory {
 
@@ -12,11 +14,11 @@ public class LoggerFactory {
     static class SimpleLogger implements Logger {
         private String name;
 
-        private AppenderList appenderList;
+        private List<Appender> appenderList;
 
         private SimpleLogger(String name) {
             this.name = name;
-            this.appenderList = new SimpleAppenderList();
+            this.appenderList = Arrays.asList(new ConsoleAppender(), new FileAppender());
         }
 
         @Override
@@ -27,7 +29,7 @@ public class LoggerFactory {
         private void log(String message, LogLevel logLevel, Throwable e) {
             DateTimeParser dateTimeParser = new LoggerDateTimeParser();
             String logMessage = String.format("%s %s %s - %s", dateTimeParser.parse(LocalDateTime.now()), logLevel.name(), this.name, message);
-            for (Appender appender : appenderList.getAppenderList()) {
+            for (Appender appender : appenderList) {
                 appender.append(new SimpleLogEvent(logMessage, logLevel, e));
             }
         }
