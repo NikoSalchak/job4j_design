@@ -24,37 +24,62 @@ public class LoggerFactory {
             return this.name;
         }
 
-        private void log(String message, LogLevel logLevel) {
+        private void log(String message, LogLevel logLevel, Throwable e) {
             DateTimeParser dateTimeParser = new LoggerDateTimeParser();
             String logMessage = String.format("%s %s %s - %s", dateTimeParser.parse(LocalDateTime.now()), logLevel.name(), this.name, message);
             for (Appender appender : appenderList.getAppenderList()) {
-                appender.append(logMessage, logLevel);
+                appender.append(new SimpleLogEvent(logMessage, logLevel, e));
             }
         }
 
         @Override
         public void trace(String message) {
-            this.log(message, LogLevel.TRACE);
+            this.log(message, LogLevel.TRACE, null);
+        }
+
+        @Override
+        public void trace(String message, Throwable e) {
+            this.log(message, LogLevel.TRACE, e);
         }
 
         @Override
         public void debug(String message) {
-            this.log(message, LogLevel.DEBUG);
+            this.log(message, LogLevel.DEBUG, null);
+        }
+
+        @Override
+        public void debug(String message, Throwable e) {
+            this.log(message, LogLevel.DEBUG, e);
         }
 
         @Override
         public void info(String message) {
-            this.log(message, LogLevel.INFO);
+            this.log(message, LogLevel.INFO, null);
+        }
+
+        @Override
+        public void info(String message, Throwable e) {
+            this.log(message, LogLevel.INFO, e);
         }
 
         @Override
         public void warn(String message) {
-            this.log(message, LogLevel.WARN);
+            this.log(message, LogLevel.WARN, null);
+        }
+
+        @Override
+        public void warn(String message, Throwable e) {
+            this.log(message, LogLevel.WARN, e);
         }
 
         @Override
         public void error(String message) {
-            this.log(message, LogLevel.ERROR);
+            this.log(message, LogLevel.ERROR, null);
+        }
+
+        @Override
+        public void error(String message, Throwable e) {
+            this.log(message, LogLevel.ERROR, e);
         }
     }
 }

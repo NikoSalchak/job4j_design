@@ -5,7 +5,6 @@ import java.io.InputStream;
 import java.util.Properties;
 
 public class PropertyReader {
-
     private Properties properties;
 
     public PropertyReader() {

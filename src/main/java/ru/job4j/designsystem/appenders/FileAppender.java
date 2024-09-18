@@ -1,21 +1,23 @@
 package ru.job4j.designsystem.appenders;
 
-import ru.job4j.designsystem.LogLevel;
+import ru.job4j.designsystem.LogEvent;
 
 import java.io.*;
 
 public class FileAppender extends AbstractAppender {
 
     @Override
-    public void append(String message, LogLevel logLevel) {
-        String[] rootLogger = properties.getRootConfigurations();
+    public void append(LogEvent logEvent) {
+        String[] rootLogger = super.properties.getRootConfigurations();
         for (int i = 0; i < rootLogger.length; i++) {
-            if ("File".equals(properties.getProperty("appender.".concat(rootLogger[i])))
-                    && super.validateLevel(rootLogger[i], logLevel)) {
-                File file = new File(properties.getProperty("appender.".concat(rootLogger[i]).concat(".file")));
-                try (FileWriter writer = new FileWriter(file, true)) {
-                    String string = String.format("%s%s", message, System.lineSeparator());
-                    writer.write(string);
+            if ("File".equals(super.properties.getProperty("appender.".concat(rootLogger[i])))
+                    && super.validateLevel(rootLogger[i], logEvent.getLogLevel())) {
+                File file = new File(super.properties.getProperty("appender.".concat(rootLogger[i]).concat(".file")));
+                try (PrintWriter writer = new PrintWriter(new FileOutputStream(file, true))) {
+                    writer.println(logEvent.getMessage());
+                    if (logEvent.getThrowable() != null) {
+                        logEvent.getThrowable().printStackTrace(writer);
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

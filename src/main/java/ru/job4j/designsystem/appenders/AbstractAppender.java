@@ -1,5 +1,6 @@
 package ru.job4j.designsystem.appenders;
 
+import ru.job4j.designsystem.LogEvent;
 import ru.job4j.designsystem.LogLevel;
 import ru.job4j.designsystem.PropertyReader;
 
@@ -28,12 +29,15 @@ public class AbstractAppender implements Appender {
     }
 
     @Override
-    public void append(String message, LogLevel logLevel) {
+    public void append(LogEvent logEvent) {
         String[] rootLogger = properties.getRootConfigurations();
         for (int i = 0; i < rootLogger.length; i++) {
             if ("Console".equals(properties.getProperty("appender.".concat(rootLogger[i])))
-                    && validateLevel(rootLogger[i], logLevel)) {
-                System.out.println(message);
+                    && validateLevel(rootLogger[i], logEvent.getLogLevel())) {
+                System.out.println(logEvent.getMessage());
+                if (logEvent.getThrowable() != null) {
+                    logEvent.getThrowable().printStackTrace(System.out);
+                }
             }
         }
 
