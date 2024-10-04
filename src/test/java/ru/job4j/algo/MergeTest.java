@@ -7,12 +7,12 @@ import static org.assertj.core.api.Assertions.*;
 class MergeTest {
 
     @Test
-    void whenSortedThenOk(){
+    void whenSortedThenOk() {
         int[] array = {-13, 2, 3, 4, 4, 6, 8, 10};
         assertThat(Merge.mergeSort(array)).containsExactly(-13, 2, 3, 4, 4, 6, 8, 10);
     }
     @Test
-    void whenSortedThenOk2(){
+    void whenSortedThenOkToo() {
         int[] array = {1, 2, 3, 4, 5};
         assertThat(Merge.mergeSort(array)).containsSequence(1, 2, 3, 4, 5);
     }

@@ -20,13 +20,12 @@ public class Merge {
         int indexLeft = 0;
         int indexRight = 0;
         int i = 0;
-        while (i < rsl.length ) {
+        while (i < rsl.length) {
             if (indexLeft == left.length) {
               rsl[i] = right[indexRight++];
             } else if (indexRight == right.length) {
                 rsl[i] = left[indexLeft++];
-            }
-            else if (left[indexLeft] <= right[indexRight]) {
+            } else if (left[indexLeft] <= right[indexRight]) {
                 rsl[i] = left[indexLeft];
                 indexLeft++;
             } else if (left[indexLeft] > right[indexRight]) {
