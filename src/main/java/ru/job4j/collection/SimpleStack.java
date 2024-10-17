@@ -7,6 +7,10 @@ public class SimpleStack<T> {
         return linked.deleteFirst();
     }
 
+    public T remove() {
+        return linked.removeFirst();
+    }
+
     public void push(T value) {
         linked.addFirst(value);
     }
