@@ -97,4 +97,38 @@ class BinarySearchTreeTest {
         assertThat(tree.inPostOrder()).hasSize(7)
                 .containsExactly(1, 3, 2, 5, 7, 6, 4);
     }
+
+
+    @Test
+    void whenDeleteElOneWithoutChildrenThenOK() {
+        BinarySearchTree<Integer> bst = new BinarySearchTree<>();
+        int[] array = new int[]{2, 1, 10, 6, 14, 4, 8, 12, 16, 11, 9, 13, 15, 17, 3, 5, 7};
+        for (int i : array) {
+            bst.put(i);
+        }
+        assertThat(bst.remove(1)).isTrue();
+        assertThat(bst.inSymmetricalOrder())
+                .containsExactly(2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17);
+    }
+
+    @Test
+    void whenDeleteDeepSubtreeTenWithTwoChildrenThenOK() {
+        BinarySearchTree<Integer> bst = new BinarySearchTree<>();
+        int[] array = new int[]{2, 1, 10, 6, 14, 4, 8, 12, 16, 11, 9, 13, 15, 17, 3, 5, 7};
+        for (int i : array) {
+            bst.put(i);
+        }
+        assertThat(bst.remove(10)).isTrue();
+        assertThat(bst.contains(10)).isFalse();
+    }
+
+    @Test
+    void whenDeleteElTenWithOneChildThenOk() {
+        BinarySearchTree<Integer> bst = new BinarySearchTree<>();
+        int[] array = new int[]{2, 1, 10, 6, 4, 8, 9, 3, 5, 7};
+        for (int i : array) {
+            bst.put(i);
+        }
+        assertThat(bst.remove(10)).isTrue();
+    }
 }
